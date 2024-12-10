@@ -40,14 +40,17 @@ export function UiModalSaveNifti(props) {
     const niiArr = SaverNifti.writeBuffer(volData, volSize);
     const textToSaveAsBlob = new Blob([niiArr], { type: 'application/octet-stream' });
     const textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
-    const goodSuffix = fileName.trim().endsWith('.nii');
-    if (!goodSuffix) {
-      setFileName((prev) => `${prev.trim()}.nii`);
+    const isExtensionValid = fileName.trim().endsWith('.nii');
+    let fileNameWithExtension = fileName;
+
+    if (!isExtensionValid) {
+      fileNameWithExtension = `${fileName}.nii`;
+      setFileName(fileNameWithExtension);
     }
     // console.log(`Save to file ${fileName}`);
 
     const downloadLink = document.createElement('a');
-    downloadLink.download = fileName;
+    downloadLink.download = fileNameWithExtension;
     downloadLink.innerHTML = 'Download File';
     downloadLink.href = textToSaveAsURL;
     downloadLink.onclick = (event) => document.body.removeChild(event.target);
@@ -68,7 +71,7 @@ export function UiModalSaveNifti(props) {
   };
 
   return (
-    <Modal show={stateVis} onHide={onHide}>
+    <Modal isOpen={stateVis} onHide={onHide}>
       <ModalBody>
         <ModalHeader title="Save to Nifty" />
         <input
