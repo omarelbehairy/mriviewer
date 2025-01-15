@@ -133,6 +133,10 @@
   flex-direction: column;
 }
 
+.input_label_left {
+  margin-right: 5px;
+}
+
 .input {
   flex-grow: 1;
   border: 1px solid var(--dark-gray);

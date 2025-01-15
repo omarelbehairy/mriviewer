@@ -7,8 +7,10 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import SaverNifti from '../../engine/savers/SaverNifti';
-import { Modal, ModalBody, ModalHeader } from './ModalBase';
+import { Modal, ModalBody, ModalFooter, ModalHeader } from './ModalBase';
 import { UIButton } from '../Button/Button';
+import buttonCss from '../Button/Button.module.css';
+import modalCss from './Modals.module.css';
 
 export function UiModalSaveNifti(props) {
   const { stateVis, onHide } = props;
@@ -72,22 +74,25 @@ export function UiModalSaveNifti(props) {
 
   return (
     <Modal isOpen={stateVis} onHide={onHide}>
+      <ModalHeader title="Save to Nifty" />
       <ModalBody>
-        <ModalHeader title="Save to Nifty" />
+        <label className={modalCss.input_label_left}>Enter file name:</label>
         <input
           required
           type="text"
           placeholder="Enter file name here"
+          className={modalCss.input}
           value={fileName}
           onChange={onTexChange}
           onKeyUp={(evt) => {
             handleFormSubmit(evt);
           }}
         />
-        .nii
-        <UIButton handler={onSaveNifti} caption="Save" />
-        <UIButton handler={onHide} caption="Cancel" />
       </ModalBody>
+      <ModalFooter>
+        <UIButton handler={onSaveNifti} caption="Save" mode={'accent'} cx={buttonCss.apply} />
+        <UIButton handler={onHide} caption="Cancel" cx={buttonCss.cancel} />
+      </ModalFooter>
     </Modal>
   );
 }
