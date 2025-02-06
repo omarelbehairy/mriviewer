@@ -236,3 +236,7 @@ button:hover,
 .button_select_file svg {
   margin-right: 10px;
 }
+
+.cancel {
+  border-radius: 4px;
+}
